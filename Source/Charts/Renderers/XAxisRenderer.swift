@@ -252,10 +252,6 @@ open class XAxisRenderer: NSObject, AxisRenderer
         let paraStyle = ParagraphStyle.default.mutableCopy() as! MutableParagraphStyle
         paraStyle.alignment = .center
         
-        let labelAttrs: [NSAttributedString.Key : Any] = [.font: axis.labelFont,
-                                                          .foregroundColor: axis.labelTextColors[axis.entries[i]] ?? axis.labelTextColor,
-                                                         .paragraphStyle: paraStyle]
-
         let labelRotationAngleRadians = axis.labelRotationAngle.DEG2RAD
         let isCenteringEnabled = axis.isCenterAxisLabelsEnabled
         let valueToPixelMatrix = transformer.valueToPixelMatrix
@@ -279,6 +275,10 @@ open class XAxisRenderer: NSObject, AxisRenderer
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
             
             let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
+            let labelAttrs: [NSAttributedString.Key : Any] = [.font: axis.labelFont,
+                                                              .foregroundColor: axis.labelTextColors[axis.entries[i]] ?? axis.labelTextColor,
+                                                             .paragraphStyle: paraStyle]
+
             let labelns = label as NSString
             
             if axis.isAvoidFirstLastClippingEnabled
